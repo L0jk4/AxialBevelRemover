@@ -20,43 +20,39 @@ public Plugin myinfo =
 
 enum struct Offsets
 {
-	// cplane_t
-	int CPlane_normal;
+	int cplane_t__normal;
 
-	// cbrushside_t
-	int CBrushSide_plane;
-	int CBrushSide_surfaceIndex;
-	int CBrushSide_bBevel;
-	int CBrushSide_size;
+	int cbrushside_t__plane;
+	int cbrushside_t__surfaceIndex;
+	int cbrushside_t__bBevel;
+	int cbrushside_t__size;
 
-	// cbrush_t
-	int CBrush_contents;
-	int CBrush_numsides;
-	int CBrush_firstbrushside;
-	int CBrush_size;
+	int cbrush_t__contents;
+	int cbrush_t__numsides;
+	int cbrush_t__firstbrushside;
+	int cbrush_t__size;
 
-	// CCollisionBSPData
-	int CCollisionBSPData_numbrushes;
-	int CCollisionBSPData_map_brushes;
-	int CCollisionBSPData_map_brushsides;
+	int CCollisionBSPData__numbrushes;
+	int CCollisionBSPData__map_brushes;
+	int CCollisionBSPData__map_brushsides;
 
 	void Load(GameData hGameData)
 	{
-		this.CPlane_normal              = this.Fetch(hGameData, "CPlane::normal");
+		this.cplane_t__normal              = this.Fetch(hGameData, "cplane_t::normal");
 
-		this.CBrushSide_plane           = this.Fetch(hGameData, "CBrushSide::plane");
-		this.CBrushSide_surfaceIndex    = this.Fetch(hGameData, "CBrushSide::surfaceIndex");
-		this.CBrushSide_bBevel          = this.Fetch(hGameData, "CBrushSide::bBevel");
-		this.CBrushSide_size            = this.Fetch(hGameData, "CBrushSide::size");
+		this.cbrushside_t__plane           = this.Fetch(hGameData, "cbrushside_t::plane");
+		this.cbrushside_t__surfaceIndex    = this.Fetch(hGameData, "cbrushside_t::surfaceIndex");
+		this.cbrushside_t__bBevel          = this.Fetch(hGameData, "cbrushside_t::bBevel");
+		this.cbrushside_t__size            = this.Fetch(hGameData, "cbrushside_t::size");
 
-		this.CBrush_contents            = this.Fetch(hGameData, "CBrush::contents");
-		this.CBrush_numsides            = this.Fetch(hGameData, "CBrush::numsides");
-		this.CBrush_firstbrushside      = this.Fetch(hGameData, "CBrush::firstbrushside");
-		this.CBrush_size                = this.Fetch(hGameData, "CBrush::size");
+		this.cbrush_t__contents            = this.Fetch(hGameData, "cbrush_t::contents");
+		this.cbrush_t__numsides            = this.Fetch(hGameData, "cbrush_t::numsides");
+		this.cbrush_t__firstbrushside      = this.Fetch(hGameData, "cbrush_t::firstbrushside");
+		this.cbrush_t__size                = this.Fetch(hGameData, "cbrush_t::size");
 
-		this.CCollisionBSPData_numbrushes      = this.Fetch(hGameData, "CCollisionBSPData::numbrushes");
-		this.CCollisionBSPData_map_brushes     = this.Fetch(hGameData, "CCollisionBSPData::map_brushes");
-		this.CCollisionBSPData_map_brushsides  = this.Fetch(hGameData, "CCollisionBSPData::map_brushsides");
+		this.CCollisionBSPData__numbrushes      = this.Fetch(hGameData, "CCollisionBSPData::numbrushes");
+		this.CCollisionBSPData__map_brushes     = this.Fetch(hGameData, "CCollisionBSPData::map_brushes");
+		this.CCollisionBSPData__map_brushsides  = this.Fetch(hGameData, "CCollisionBSPData::map_brushsides");
 	}
 
 	int Fetch(GameData hGameData, const char[] key)
@@ -64,7 +60,7 @@ enum struct Offsets
 		int value = hGameData.GetOffset(key);
 		if (value == -1)
 		{
-			SetFailState("AxialBevelRemover: missing offset \"%s\" in gamedata", key);
+			SetFailState("missing offset \"%s\" in gamedata", key);
 		}
 		return value;
 	}
@@ -95,32 +91,32 @@ methodmap MemStruct
 }
 
 // ---------------------------------------------------------------------
-// cplane_t
+// cplane_t_t
 // ---------------------------------------------------------------------
 
-methodmap CPlane < MemStruct
+methodmap M_cplane_t < MemStruct
 {
-	public CPlane(Address addr)
+	public M_cplane_t(Address addr)
 	{
-		return view_as<CPlane>(addr);
+		return view_as<M_cplane_t>(addr);
 	}
 
 	property float normal_x
 	{
-		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 0), NumberType_Int32)); }
-		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 0), view_as<int>(value), NumberType_Int32); }
+		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 0), NumberType_Int32)); }
+		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 0), view_as<int>(value), NumberType_Int32); }
 	}
 
 	property float normal_y
 	{
-		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 4), NumberType_Int32)); }
-		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 4), view_as<int>(value), NumberType_Int32); }
+		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 4), NumberType_Int32)); }
+		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 4), view_as<int>(value), NumberType_Int32); }
 	}
 
 	property float normal_z
 	{
-		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 8), NumberType_Int32)); }
-		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CPlane_normal + 8), view_as<int>(value), NumberType_Int32); }
+		public get() { return view_as<float>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 8), NumberType_Int32)); }
+		public set(float value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cplane_t__normal + 8), view_as<int>(value), NumberType_Int32); }
 	}
 
 	public bool IsAxial()
@@ -138,35 +134,35 @@ methodmap CPlane < MemStruct
 }
 
 // ---------------------------------------------------------------------
-// cbrushside_t
+// cbrushside_t_t
 // ---------------------------------------------------------------------
 
-methodmap CBrushSide < MemStruct
+methodmap M_cbrushside_t < MemStruct
 {
-	public CBrushSide(Address addr)
+	public M_cbrushside_t(Address addr)
 	{
-		return view_as<CBrushSide>(addr);
+		return view_as<M_cbrushside_t>(addr);
 	}
 
-	property CPlane plane
+	property M_cplane_t plane
 	{
-		public get() { return view_as<CPlane>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_plane), NumberType_Int32)); }
-		public set(CPlane value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_plane), view_as<int>(value), NumberType_Int32); }
+		public get() { return view_as<M_cplane_t>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__plane), NumberType_Int32)); }
+		public set(M_cplane_t value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__plane), view_as<int>(value), NumberType_Int32); }
 	}
 
 	property int surfaceIndex
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_surfaceIndex), NumberType_Int16) & 0xFFFF; }
-		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_surfaceIndex), value, NumberType_Int16); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__surfaceIndex), NumberType_Int16) & 0xFFFF; }
+		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__surfaceIndex), value, NumberType_Int16); }
 	}
 
-	property int bBevel
+	property bool bBevel
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_bBevel), NumberType_Int16) & 0xFFFF; }
-		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrushSide_bBevel), value, NumberType_Int16); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__bBevel), NumberType_Int16) & 0xFFFF; }
+		public set(bool value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrushside_t__bBevel), value, NumberType_Int16); }
 	}
 
-	public void CopyFrom(CBrushSide other)
+	public void CopyFrom(M_cbrushside_t other)
 	{
 		this.plane        = other.plane;
 		this.surfaceIndex = other.surfaceIndex;
@@ -175,33 +171,33 @@ methodmap CBrushSide < MemStruct
 }
 
 // ---------------------------------------------------------------------
-// cbrush_t
+// cbrush_t__t
 // ---------------------------------------------------------------------
 
 #define NUMSIDES_BOXBRUSH	0xFFFF
-methodmap CBrush < MemStruct
+methodmap M_cbrush_t < MemStruct
 {
-	public CBrush(Address addr)
+	public M_cbrush_t(Address addr)
 	{
-		return view_as<CBrush>(addr);
+		return view_as<M_cbrush_t>(addr);
 	}
 
 	property int contents
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrush_contents), NumberType_Int32); }
-		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrush_contents), value, NumberType_Int32); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__contents), NumberType_Int32); }
+		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__contents), value, NumberType_Int32); }
 	}
 
 	property int numsides
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrush_numsides), NumberType_Int16) & 0xFFFF; }
-		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrush_numsides), value, NumberType_Int16); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__numsides), NumberType_Int16) & 0xFFFF; }
+		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__numsides), value, NumberType_Int16); }
 	}
 
 	property int firstbrushside
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CBrush_firstbrushside), NumberType_Int16) & 0xFFFF; }
-		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.CBrush_firstbrushside), value, NumberType_Int16); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__firstbrushside), NumberType_Int16) & 0xFFFF; }
+		public set(int value) { StoreToAddress(this.Address + view_as<Address>(g_Offsets.cbrush_t__firstbrushside), value, NumberType_Int16); }
 	}
 
 	public bool IsBox()
@@ -234,28 +230,28 @@ methodmap CCollisionBSPData < MemStruct
 
 	property Address map_brushsides
 	{
-		public get() { return view_as<Address>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData_map_brushsides), NumberType_Int32)); }
+		public get() { return view_as<Address>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData__map_brushsides), NumberType_Int32)); }
 	}
 
 	property int numbrushes
 	{
-		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData_numbrushes), NumberType_Int32); }
+		public get() { return LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData__numbrushes), NumberType_Int32); }
 	}
 
 	property Address map_brushes
 	{
-		public get() { return view_as<Address>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData_map_brushes), NumberType_Int32)); }
+		public get() { return view_as<Address>(LoadFromAddress(this.Address + view_as<Address>(g_Offsets.CCollisionBSPData__map_brushes), NumberType_Int32)); }
 	}
 
 
-	public CBrush GetBrush(int index)
+	public M_cbrush_t GetBrush(int index)
 	{
-		return view_as<CBrush>(this.map_brushes + view_as<Address>(index * g_Offsets.CBrush_size));
+		return view_as<M_cbrush_t>(this.map_brushes + view_as<Address>(index * g_Offsets.cbrush_t__size));
 	}
 
-	public CBrushSide GetBrushSide(int index)
+	public M_cbrushside_t GetBrushSide(int index)
 	{
-		return view_as<CBrushSide>(this.map_brushsides + view_as<Address>(index * g_Offsets.CBrushSide_size));
+		return view_as<M_cbrushside_t>(this.map_brushsides + view_as<Address>(index * g_Offsets.cbrushside_t__size));
 	}
 }
 
@@ -271,14 +267,14 @@ public void OnPluginStart()
 	if (hGameData == null)
 	{
 	    delete hGameData;
-		SetFailState("AxialBevelRemover: could not read gamedata file \"%s.txt\"", GAMEDATA_FILE);
+		SetFailState("could not read gamedata file \"%s.txt\"", GAMEDATA_FILE);
 	}
 
     g_BSPData = view_as<CCollisionBSPData>(hGameData.GetAddress("g_BSPData"));
 	if (!g_BSPData.IsValid)
 	{
         delete hGameData;
-		SetFailState("AxialBevelRemover: failed to resolve g_BSPData address");
+		SetFailState("failed to resolve g_BSPData address");
 	}
 
 	g_Offsets.Load(hGameData);
@@ -300,7 +296,7 @@ void RemoveAxialBevels()
      // "remove" axial bevels by overriding map_brushsides array and decreasing numsides
 	for (int i = 0; i < numBrushes; i++)
 	{
-		CBrush brush = g_BSPData.GetBrush(i);
+		M_cbrush_t brush = g_BSPData.GetBrush(i);
 
 		if (brush.IsBox()) continue;
 
@@ -316,18 +312,18 @@ void RemoveAxialBevels()
 
 		for (int readIndex = firstSideIndex + 6; readIndex < firstSideIndex + numSides; readIndex++)
 		{
-			CBrushSide side = g_BSPData.GetBrushSide(readIndex);
+			M_cbrushside_t side = g_BSPData.GetBrushSide(readIndex);
 
-			if (side.bBevel == 0 || !side.plane.IsAxial())
+			if (side.bBevel && side.plane.IsAxial())
+			{
+				patched = true; // skip: axial bevel
+			}
+			else 
 			{
 				if (writeIndex != readIndex)
 					g_BSPData.GetBrushSide(writeIndex).CopyFrom(side);
 				writeIndex++;
 				sidesKept++;
-			}
-			else // skip: axial bevel
-			{
-				patched = true;
 			}
             
 		}
