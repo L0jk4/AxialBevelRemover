@@ -3,8 +3,16 @@
 
 #include <sourcemod>
 
+public Plugin myinfo =
+{
+	name        = "AxialBevelRemover",
+	author      = "Lojka",
+	description = "Removes axial bevels which break brush collision",
+	version     = "1.0.0",
+	url         = "https://github.com/L0jk4/AxialBevelRemover"
+};
+
 #define GAMEDATA_FILE		"AxialBevelRemover.games"
-#define NUMSIDES_BOXBRUSH	0xFFFF
 
 // ---------------------------------------------------------------------
 // Offsets - loaded once from gamedata at startup
@@ -170,6 +178,7 @@ methodmap CBrushSide < MemStruct
 // cbrush_t
 // ---------------------------------------------------------------------
 
+#define NUMSIDES_BOXBRUSH	0xFFFF
 methodmap CBrush < MemStruct
 {
 	public CBrush(Address addr)
@@ -256,15 +265,6 @@ methodmap CCollisionBSPData < MemStruct
 
 CCollisionBSPData g_BSPData = view_as<CCollisionBSPData>(Address_Null);
 
-public Plugin myinfo =
-{
-	name        = "AxialBevelRemover",
-	author      = "Lojka",
-	description = "Removes axial bevels which break brush collision",
-	version     = "1.0.0",
-	url         = ""
-};
-
 public void OnPluginStart()
 {
     GameData hGameData = new GameData(GAMEDATA_FILE);
@@ -295,7 +295,7 @@ public void OnMapStart()
 void RemoveAxialBevels()
 {
 	int numBrushes = g_BSPData.numbrushes;
-	int patched = 0;
+	int brushesPatched = 0;
 
      // "remove" axial bevels by overriding map_brushsides array and decreasing numsides
 	for (int i = 0; i < numBrushes; i++)
@@ -312,6 +312,7 @@ void RemoveAxialBevels()
         // first 6 sides are axial
 		int sidesKept  = 6;
 		int writeIndex = firstSideIndex + 6;
+		bool patched = false;
 
 		for (int readIndex = firstSideIndex + 6; readIndex < firstSideIndex + numSides; readIndex++)
 		{
@@ -324,12 +325,16 @@ void RemoveAxialBevels()
 				writeIndex++;
 				sidesKept++;
 			}
-            // else - skip: axial bevel
+			else // skip: axial bevel
+			{
+				patched = true;
+			}
+            
 		}
-
 		brush.numsides = sidesKept;
-		patched++;
+
+		if (patched) brushesPatched++;
 	}
 
-	LogMessage("AxialBevelRemover: scanned %d brushes, modified %d", numBrushes, patched);
+	LogMessage("AxialBevelRemover: scanned %d brushes, modified %d", numBrushes, brushesPatched);
 }
