@@ -53,7 +53,7 @@
 				"windows"	"6"
 				"linux"		"6"
 			}
-			"cbrushside_t::size"
+			"cbrushside_t size"
 			{
 				"windows"	"8"
 				"linux"		"8"
@@ -74,7 +74,7 @@
 				"windows"	"6"
 				"linux"		"6"
 			}
-			"cbrush_t::size"
+			"cbrush_t size"
 			{
 				"windows"	"8"
 				"linux"		"8"

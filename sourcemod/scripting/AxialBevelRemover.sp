@@ -43,12 +43,12 @@ enum struct Offsets
 		this.cbrushside_t__plane           = this.Fetch(hGameData, "cbrushside_t::plane");
 		this.cbrushside_t__surfaceIndex    = this.Fetch(hGameData, "cbrushside_t::surfaceIndex");
 		this.cbrushside_t__bBevel          = this.Fetch(hGameData, "cbrushside_t::bBevel");
-		this.cbrushside_t__size            = this.Fetch(hGameData, "cbrushside_t::size");
+		this.cbrushside_t__size            = this.Fetch(hGameData, "cbrushside_t size");
 
 		this.cbrush_t__contents            = this.Fetch(hGameData, "cbrush_t::contents");
 		this.cbrush_t__numsides            = this.Fetch(hGameData, "cbrush_t::numsides");
 		this.cbrush_t__firstbrushside      = this.Fetch(hGameData, "cbrush_t::firstbrushside");
-		this.cbrush_t__size                = this.Fetch(hGameData, "cbrush_t::size");
+		this.cbrush_t__size                = this.Fetch(hGameData, "cbrush_t size");
 
 		this.CCollisionBSPData__numbrushes      = this.Fetch(hGameData, "CCollisionBSPData::numbrushes");
 		this.CCollisionBSPData__map_brushes     = this.Fetch(hGameData, "CCollisionBSPData::map_brushes");
@@ -292,6 +292,7 @@ void RemoveAxialBevels()
 {
 	int numBrushes = g_BSPData.numbrushes;
 	int brushesPatched = 0;
+	int numAxialBevels = 0;
 
      // "remove" axial bevels by overriding map_brushsides array and decreasing numsides
 	for (int i = 0; i < numBrushes; i++)
@@ -317,6 +318,7 @@ void RemoveAxialBevels()
 			if (side.bBevel && side.plane.IsAxial())
 			{
 				patched = true; // skip: axial bevel
+				numAxialBevels++;
 			}
 			else 
 			{
@@ -332,5 +334,5 @@ void RemoveAxialBevels()
 		if (patched) brushesPatched++;
 	}
 
-	LogMessage("AxialBevelRemover: scanned %d brushes, modified %d", numBrushes, brushesPatched);
+	LogMessage("scanned %d brushes | modified %d of them | total axial bevels: %d", numBrushes, brushesPatched, numAxialBevels);
 }
