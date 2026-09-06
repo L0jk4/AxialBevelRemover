@@ -1,0 +1,100 @@
+"Games"
+{
+	"#default"
+	{
+		"Addresses"
+		{
+			"g_BSPData"
+			{
+				"windows"
+				{
+					"signature"		"g_BSPData"
+					"read"			"1"
+				}
+				"linux"
+				{
+					"signature"		"g_BSPData"
+					"read"			"3"
+				}
+			}
+		}
+
+		"Signatures"
+		{
+            //"portalnum > numareaportals" in CM_SetAreaPortalStates
+            "g_BSPData"
+            {
+                "library"       "engine"
+                "windows"       "\x68\x2A\x2A\x2A\x2A\x0F\x95\xC1"
+                "linux"         "\xC7\x45\x2A\x2A\x2A\x2A\x2A\x8D\x65\x2A\x5B\x5E\x5D\xE9\x2A\x2A\x2A\x2A\x8D\x74\x26\x2A\x83\xEC"
+            }
+		}
+
+		"Offsets"
+		{
+			"CPlane::normal"
+			{
+				"windows"	"0"
+				"linux"		"0"
+			}
+
+			"CBrushSide::plane"
+			{
+				"windows"	"0"
+				"linux"		"0"
+			}
+			"CBrushSide::surfaceIndex"
+			{
+				"windows"	"4"
+				"linux"		"4"
+			}
+			"CBrushSide::bBevel"
+			{
+				"windows"	"6"
+				"linux"		"6"
+			}
+			"CBrushSide::size"
+			{
+				"windows"	"8"
+				"linux"		"8"
+			}
+
+			"CBrush::contents"
+			{
+				"windows"	"0"
+				"linux"		"0"
+			}
+			"CBrush::numsides"
+			{
+				"windows"	"4"
+				"linux"		"4"
+			}
+			"CBrush::firstbrushside"
+			{
+				"windows"	"6"
+				"linux"		"6"
+			}
+			"CBrush::size"
+			{
+				"windows"	"8"
+				"linux"		"8"
+			}
+
+			"CCollisionBSPData::map_brushsides"
+			{
+				"windows"	"104"
+				"linux"		"104"
+			}
+			"CCollisionBSPData::numbrushes"
+			{
+				"windows"	"192"
+				"linux"		"192"
+			}
+			"CCollisionBSPData::map_brushes"
+			{
+				"windows"	"196"
+				"linux"		"196"
+			}
+		}
+	}
+}
