@@ -50,9 +50,9 @@ enum struct Offsets
 		this.cbrush_t__firstbrushside      = this.Fetch(hGameData, "cbrush_t::firstbrushside");
 		this.cbrush_t__size                = this.Fetch(hGameData, "cbrush_t size");
 
+		this.CCollisionBSPData__map_brushsides  = this.Fetch(hGameData, "CCollisionBSPData::map_brushsides");
 		this.CCollisionBSPData__numbrushes      = this.Fetch(hGameData, "CCollisionBSPData::numbrushes");
 		this.CCollisionBSPData__map_brushes     = this.Fetch(hGameData, "CCollisionBSPData::map_brushes");
-		this.CCollisionBSPData__map_brushsides  = this.Fetch(hGameData, "CCollisionBSPData::map_brushsides");
 	}
 
 	int Fetch(GameData hGameData, const char[] key)
@@ -204,17 +204,6 @@ methodmap M_cbrush_t < MemStruct
 	{
 		return this.numsides == NUMSIDES_BOXBRUSH;
 	}
-
-	public int GetBox()
-	{
-		return this.firstbrushside;
-	}
-
-	public void SetBox(int boxID)
-	{
-		this.numsides = NUMSIDES_BOXBRUSH;
-		this.firstbrushside = boxID;
-	}
 }
 
 // ---------------------------------------------------------------------
@@ -292,7 +281,7 @@ void RemoveAxialBevels()
 {
 	int numBrushes = g_BSPData.numbrushes;
 	int brushesPatched = 0;
-	int numAxialBevels = 0;
+	int numSidesRemoved = 0;
 
      // "remove" axial bevels by overriding map_brushsides array and decreasing numsides
 	for (int i = 0; i < numBrushes; i++)
@@ -306,7 +295,7 @@ void RemoveAxialBevels()
 
 		int firstSideIndex  = brush.firstbrushside;
 
-        // first 6 sides are axial
+        // first 6 sides are propper axial
 		int sidesKept  = 6;
 		int writeIndex = firstSideIndex + 6;
 		bool patched = false;
@@ -318,7 +307,7 @@ void RemoveAxialBevels()
 			if (side.bBevel && side.plane.IsAxial())
 			{
 				patched = true; // skip: axial bevel
-				numAxialBevels++;
+				numSidesRemoved++;
 			}
 			else 
 			{
@@ -334,5 +323,5 @@ void RemoveAxialBevels()
 		if (patched) brushesPatched++;
 	}
 
-	LogMessage("scanned %d brushes | modified %d of them | total axial bevels: %d", numBrushes, brushesPatched, numAxialBevels);
+	LogMessage("scanned %d brushes | modified %d of them | wrong axial bevels removed: %d", numBrushes, brushesPatched, numSidesRemoved);
 }
